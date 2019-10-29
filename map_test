@@ -1,0 +1,20 @@
+4
+##start
+start 20 20
+A 2 2
+A1 4 4
+B 30 4
+C 45 3
+E 50 4
+D 23 4
+##end
+end 0 0
+start-A
+start-B
+B-D
+D-E
+E-end
+C-end
+B-C
+A1-C
+A-A1
