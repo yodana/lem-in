@@ -29,6 +29,24 @@ int				multi_pass(t_room *room, t_room *start)
 	}
 	return (0);
 }
+
+void		destroy_link(t_room *room, t_room *room_1)
+{
+	int i;
+	t_room *tmp;
+	t_room *tmp2;
+	
+	tmp = room;
+	tmp2 = room_1;
+	i = 0;
+	while (tmp->tab[i] && tmp->tab[i] != room_1)
+		i++;
+	tmp->tab[i] = NULL;
+	i = 0;
+	while (tmp2->tab[i] && tmp2->tab[i] != room)
+		i++;
+	tmp2->tab[i] = NULL;
+}
 void		ft_one_backtrack(t_room **room, t_queue **list, int i, t_all **map)
 {
 	t_room		*tmp;
@@ -65,6 +83,7 @@ void		ft_one_backtrack(t_room **room, t_queue **list, int i, t_all **map)
 		while (tmp && !ft_another_path_exist(map[0], tmp->tab))
 		{
 			tmp->way = 0;
+			destroy_link(tmp->parent, tmp);
 			tmp = tmp->parent;
 
 		}
@@ -248,24 +267,22 @@ static void		ft_keep_going(int *k_g, t_queue **sol, int *s_cost, t_all *map)
 	ft_print_queue(*sol);
 	(void)tmp;
 //	display(sol, 5);
-	/*if (s_cost[0] == 94)
-	{
-		ft_print_queue(*sol);
-		display(sol, 440);
-		exit(0);
-	}*/
-	if (cost == 89)
-		exit(0);
+	//if (s_cost[0] == 94)
+	//{
+	//	ft_print_queue(*sol);
+	//	display(sol, 440);
+	//	exit(0);
+	//}
 	//k_g[0] = 1;
-	//if (cost <= s_cost[0])
+	if (cost < s_cost[0])
 	{
 		s_cost[0] = cost;
 		k_g[0] = 1;
 		ft_copy_in_old(&map);
 	}
-	//else
+	else
 	{
-		//k_g[0] = 0;
+		k_g[0] = 0;
 	}
 	/*else
 	{
